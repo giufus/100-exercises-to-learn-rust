@@ -1,3 +1,5 @@
+use std::ops::Deref;
+
 enum Shape {
     Circle { radius: f64 },
     Square { border: f64 },
@@ -8,7 +10,22 @@ impl Shape {
     // TODO: Implement the `radius` method using
     //  either an `if let` or a `let/else`.
     pub fn radius(&self) -> f64 {
-        todo!()
+        if let Shape::Circle { radius } = self {
+            *radius
+        } else {
+            panic!("Only `Circle` shapes have a radius");
+        }
+    }
+}
+
+impl Deref for Shape {
+    type Target = f64;
+
+    fn deref(&self) -> &Self::Target {
+        match self {
+            Shape::Circle { radius } => radius,
+            _ => panic!("Only `Circle` shapes have a radius"),
+        }
     }
 }
 
@@ -34,6 +51,6 @@ mod tests {
             width: 1.0,
             height: 2.0,
         }
-        .radius();
+            .radius();
     }
 }
