@@ -1,9 +1,11 @@
 // TODO: Flesh out the `WeekTemperatures` struct and its method implementations to pass the tests.
 
+#[derive(Default)]
 pub struct WeekTemperatures {
-    // TODO
+    pub temperatures: [i32; 7],
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Weekday {
     Monday,
     Tuesday,
@@ -14,17 +16,47 @@ pub enum Weekday {
     Sunday,
 }
 
+#[derive(Debug)]
+pub enum NumberError {
+    InvalidNumber,
+}
+
+impl TryFrom<i32> for Weekday {
+    type Error = NumberError;
+
+    fn try_from(value: i32) -> Result<Self, Self::Error> {
+        match value {
+            0 => Ok(Weekday::Monday),
+            1 => Ok(Weekday::Tuesday),
+            2 => Ok(Weekday::Wednesday),
+            3 => Ok(Weekday::Thursday),
+            4 => Ok(Weekday::Friday),
+            5 => Ok(Weekday::Saturday),
+            6 => Ok(Weekday::Sunday),
+            _ => Err(NumberError::InvalidNumber),
+        }
+    }
+}
+
 impl WeekTemperatures {
     pub fn new() -> Self {
-        todo!()
+        /*let temperatures = (0..7)
+            .map(|d| Weekday::try_from(d).unwrap())
+            .collect::<Vec<Weekday>>();*/
+        WeekTemperatures {
+            temperatures: [i32::MIN; 7],
+        }
     }
 
     pub fn get_temperature(&self, day: Weekday) -> Option<i32> {
-        todo!()
+        self.temperatures
+            .get(day as usize)
+            .map(|&d| if d != i32::MIN { Some(d) } else { None })
+            .flatten()
     }
 
     pub fn set_temperature(&mut self, day: Weekday, temperature: i32) {
-        todo!()
+        self.temperatures[day as usize] = temperature;
     }
 }
 
