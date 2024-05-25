@@ -1,3 +1,5 @@
+use std::iter::Filter;
+use std::slice::Iter;
 // TODO: Implement the `to_dos` method. It must return a `Vec` of references to the tickets
 //  in `TicketStore` with status set to `Status::ToDo`.
 use ticket_fields::{TicketDescription, TicketTitle};
@@ -21,7 +23,7 @@ pub enum Status {
     Done,
 }
 
-impl TicketStore {
+impl<'a> TicketStore {
     pub fn new() -> Self {
         Self {
             tickets: Vec::new(),
@@ -31,6 +33,15 @@ impl TicketStore {
     pub fn add_ticket(&mut self, ticket: Ticket) {
         self.tickets.push(ticket);
     }
+
+    pub fn to_dos(&self) -> Vec<&Ticket> {
+        self.tickets
+            .iter()
+            .filter(|&ticket| ticket.status == Status::ToDo)
+            .collect()
+    }
+    
+    
 }
 
 #[cfg(test)]
