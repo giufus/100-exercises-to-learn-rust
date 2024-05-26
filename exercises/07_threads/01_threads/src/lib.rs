@@ -15,12 +15,29 @@
 use std::thread;
 
 pub fn sum(v: Vec<i32>) -> i32 {
-    todo!()
+    let sp_size = v.len()/2;
+    let (vec_1, vec_2) = v.split_at(sp_size);
+    let vec_1 = vec_1.to_vec();
+    let vec_2 = vec_2.to_vec();
+    let sum_1 = spawn(move|| {
+        vec_1.into_iter().sum::<i32>()
+    });
+    let sum_2 = spawn(move|| {
+        vec_2.into_iter().sum::<i32>()
+    });
+    sum_1.join().unwrap() + sum_2.join().unwrap()
+    //println!("{:?} and {:?}", slice_1, slice_2);
+    //0
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn run() {
+        sum(vec![1,2,3,4,5]);
+    }
 
     #[test]
     fn empty() {
