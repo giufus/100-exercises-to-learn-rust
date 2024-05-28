@@ -4,13 +4,29 @@
 use std::thread;
 
 pub fn sum(slice: &'static [i32]) -> i32 {
-    todo!()
+    let size = slice.len() / 2;
+    
+    //let slice_1 = &slice[0..size];
+    //let slice_2 = &slice[size..];
+    let (slice_1, slice_2) = slice.split_at(size);
+    
+    let sum_1 = thread::spawn(move|| {
+        slice_1.iter().sum::<i32>()
+    });
+    let sum_2 = thread::spawn(move|| {
+        slice_2.iter().sum::<i32>()
+    });
+    sum_1.join().unwrap() + sum_2.join().unwrap()
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
+    #[test]
+    fn run() {
+        sum(&[1,2,3,4,5]);
+    }
     #[test]
     fn empty() {
         static ARRAY: [i32; 0] = [];
