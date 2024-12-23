@@ -34,6 +34,56 @@ impl Ticket {
         }
     }
 
+    fn validate_title(title: &str) -> bool {
+        if title.is_empty() {
+            panic!("Title cannot be empty")
+        }
+
+        if title.len() > 50 {
+            panic!("Title cannot be longer than 50 bytes")
+        }
+
+        true
+    }
+
+    fn validate_description(description: &str) -> bool {
+        if description.is_empty() {
+            panic!("Description cannot be empty")
+        }
+
+        if description.len() > 500 {
+            panic!("Description cannot be longer than 500 bytes")
+        }
+
+        true
+    }
+
+    fn validate_status(status: &str) -> bool {
+        if !["To-Do", "In Progress", "Done"].contains(&status) {
+            panic!("Only `To-Do`, `In Progress`, and `Done` statuses are allowed")
+        }
+
+        true
+    }
+
+    fn set_title(&mut self, title: String) {
+        if Self::validate_title(title.as_str()) {
+            self.title = title.into();
+        }
+    }
+
+    fn set_description(&mut self, description: String) {
+        if Self::validate_description(description.as_str()) {
+            self.description = description.into();
+        }
+    }
+
+    fn set_status(&mut self, status: String) {
+        if Self::validate_status(status.as_str()) {
+            self.status = status.into();
+        }
+    }
+
     pub fn title(&self) -> &String {
         &self.title
     }
