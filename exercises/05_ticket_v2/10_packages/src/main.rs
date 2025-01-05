@@ -3,9 +3,9 @@
 // TODO: fix this broken import. Create a new library target in the `src` directory.
 //   The library target should expose a public function named `hello_world` that takes no arguments
 //   and returns nothing.
-use packages::hello_world;
+use packages::hello_horld;
 
 // This is the entrypoint of the binary.
 fn main() {
-    hello_world();
+    hello_horld();
 }
